@@ -9,6 +9,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
+import shutil
 
 with open('IEEE-form.csv','r') as file:
 	x = csv.DictReader(file)
@@ -30,6 +31,7 @@ with open('IEEE-form.csv','r') as file:
 		image.paste (logo,(0,0))
 		image.show()
 		image.save('pass.jpg')
+		shutil.copy('pass.jpg',"{}.jpg".format(row['Full Name']))
 
 		email_sender='nishprojects232@gmail.com'
 		email_receiver=row['Email ID ']
@@ -44,7 +46,7 @@ with open('IEEE-form.csv','r') as file:
 		msg.attach(MIMEText(body,'plain'))
 
 		###Working on attachment of Images with EMAIL
-		filename = 'pass.jpg'
+		filename = "{}.jpg".format(row['Full Name'])
 
 
 		attachment = open(filename,'rb')
@@ -60,7 +62,7 @@ with open('IEEE-form.csv','r') as file:
 		text = msg.as_string()
 		server = smtplib.SMTP('smtp.gmail.com',587)
 		server.starttls()
-		server.login(email_sender,'******')
+		server.login(email_sender,'*******') #PASSWORD
 
 		server.sendmail(email_sender,email_receiver,text)
 		server.quit()
