@@ -1,2 +1,1 @@
-# Nish-genius
-ieee passes using csv and python
+Automate IEEE certificates via Mail using Python
